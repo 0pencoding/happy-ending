@@ -4,7 +4,7 @@ import Button from "../Atoms/Button";
 
 function SelectionBox({ data, styleName }) {
   const history = useHistory();
-  const { buttons } = data;
+  const { prevent_click, buttons } = data;
   const { btn_style } = styleName;
   const selectionBoxRef = useRef();
 
@@ -18,8 +18,8 @@ function SelectionBox({ data, styleName }) {
 
   function clickHandler(e) {
     e.preventDefault();
-    
-    if (e.target.classList.contains("Button")) {
+
+    if (prevent_click.current && e.target.classList.contains("Button")) {
       e.target.classList.add("selected");
       Array.from(e.currentTarget.querySelectorAll(".Button"))
         .filter((b) => !b.classList.contains("selected"))

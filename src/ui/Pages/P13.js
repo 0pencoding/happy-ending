@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import FullTextFieldTemplate from "../Templates/FullTextFieldTemplate";
@@ -7,10 +7,15 @@ import P13Vedio from "../../assets/videos/13-erase.mp4";
 import "../../scss/pages.scss";
 
 function P13({ history }) {
+  const click = useRef(false);
   const [input, onChange] = useInputs({
     eraseMoment: localStorage.getItem("eraseMoment") ?? "",
     isValidate: localStorage.getItem("eraseMoment")? true : false,
   });
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
 
   const goBack = () => {
     history.goBack();
@@ -27,6 +32,7 @@ function P13({ history }) {
     },
     ftfr_data: {
       to: "/p14",
+      prevent_click: click,
       validate: input.isValidate,
       ftf_data: {
         tf_data: {

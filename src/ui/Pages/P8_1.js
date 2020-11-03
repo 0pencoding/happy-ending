@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import MultipleChoiceTemplate from "../Templates/MultipleChoiceTemplate";
 import P8_1_Video from "../../assets/videos/8-1-travel alone_together.mp4";
@@ -6,6 +6,12 @@ import P8_1_Video from "../../assets/videos/8-1-travel alone_together.mp4";
 import "../../scss/pages.scss";
 
 function P8_1({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 5000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
@@ -19,6 +25,7 @@ function P8_1({ history }) {
       },
     },
     sr_data: {
+      prevent_click: click,
       buttons: [
         {
           to: "/p8_1_1",

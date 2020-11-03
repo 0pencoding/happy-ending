@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import MultipleChoiceTemplate from "../Templates/MultipleChoiceTemplate";
 
 import "../../scss/pages.scss";
 
 function P20({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
+
   const data = {
     dq_data: {
       h3_data: {
@@ -24,6 +31,7 @@ function P20({ history }) {
       },
     },
     sr_data: {
+      prevent_click: click,
       buttons: [
         {
           to: "/p21",

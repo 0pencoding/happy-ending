@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import SeparatedTemplate24 from "../Templates/SeparatedTemplate24";
@@ -6,12 +6,17 @@ import SeparatedTemplate24 from "../Templates/SeparatedTemplate24";
 import "../../scss/pages.scss";
 
 function P24({ history }) {
+  const click = useRef(false);
   const name = localStorage.getItem("name") ?? "홍길동";
   const [inputs, onChange] = useInputs({	
     alias: localStorage.getItem("alias") ?? "",	
     lastWord: localStorage.getItem("lastWord") ?? "",	
     isValidate: localStorage.getItem("alias")&&localStorage.getItem("lastWord")? true : false,
   });
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
   
   const goBack = () => {
     history.goBack();
@@ -33,6 +38,7 @@ function P24({ history }) {
       },
     },
     gsr_data: {
+      prevent_click: click,
       validate: inputs.isValidate,
       gs_data: {
         tf_data: "(              어떤              )",

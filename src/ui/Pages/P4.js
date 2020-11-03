@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import SeparatedTemplate4 from "../Templates/SeparatedTemplate4";
@@ -7,6 +7,17 @@ import P4Vedio from "../../assets/videos/4-book.mp4";
 import "../../scss/pages.scss";
 
 function P4({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 6000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
+
   const [inputs, onChange] = useInputs({
     name: localStorage.getItem("name") ?? "",
     year: localStorage.getItem("year") ?? "",
@@ -43,6 +54,7 @@ function P4({ history }) {
     },
     irpns_data: {
       validate: inputs.isValidate,
+      prevent_click: onClick,
       info_data: {
         inputs: inputs,
         names: ["name", "year", "month", "day"],

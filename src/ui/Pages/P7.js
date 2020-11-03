@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import SeparatedTemplate7 from "../Templates/SeparatedTemplate7";
 import P7Video from "../../assets/videos/7-break or not.mp4";
@@ -7,19 +7,30 @@ import P7Video_break from "../../assets/videos/7-break.mp4";
 import "../../scss/pages.scss";
 
 function P7({ history }) {
+  const click = useRef(false);
+  const [video, setVideo] = useState(P7Video);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+  
   const goBack = () => {
     history.goBack();
   };
-
-  const [video, setVideo] = useState(P7Video);
 
   const goNext = () => {
     history.push("/p7_1");
   };
 
-  const onClick = (e) => {
+  const onClickA = (e) => {
     e.preventDefault();
-    setVideo(P7Video_break);
+    if (click.current)
+      setVideo(P7Video_break);
+  };
+
+  const onClickB = (e) => {
+    if (!click.current)
+      e.preventDefault();
   };
 
   const data = {
@@ -39,12 +50,13 @@ function P7({ history }) {
     },
     s1_data: {
       to: "/p7_1",
-      onClick: onClick,
+      onClick: onClickA,
       text: "깨고싶으면 망치를 탭해주세요",
     },
     s2_data: {
       to: "/p7_2",
       text: "그대로 두려면 돼지저금통을 탭해주세요",
+      onClick: onClickB,
     },
   };
   const styleName = {

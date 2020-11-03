@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import InsertyPaperTemplate from "../Templates/InsertyPaperTemplate";
@@ -7,6 +7,17 @@ import P23Vedio from "../../assets/videos/23-after D-1.mp4";
 import "../../scss/pages.scss";
 
 function P23({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
+
   const goBack = () => {
     history.goBack();
     history.goBack();
@@ -40,7 +51,7 @@ function P23({ history }) {
   };
 
   return (
-    <Link to={"/p24"}>
+    <Link to={"/p24"} onClick={onClick}>
       <div className={classNames("Page", "P23", "bg-video", "fade-in")}>
         <video autoPlay muted>
           <source src={P23Vedio} type="video/mp4" />

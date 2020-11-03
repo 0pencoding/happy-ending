@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import SeparatedTemplate3 from "../Templates/SeparatedTemplate3";
@@ -6,6 +6,17 @@ import SeparatedTemplate3 from "../Templates/SeparatedTemplate3";
 import "../../scss/pages.scss";
 
 function P3() {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 5000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
+
   const data = {
     h3_data: {
       text: "Prologue",
@@ -34,7 +45,7 @@ function P3() {
     span_style: ["noto", "xs", "davy-gray", "light", "fade-in-out-4s"],
   };
   return (
-    <Link to={"/p4"}>
+    <Link to={"/p4"} onClick={onClick}>
       <div className={classNames("Page", "P3", "fade-in")}>
         <SeparatedTemplate3 data={data} styleName={styleName}></SeparatedTemplate3>
       </div>

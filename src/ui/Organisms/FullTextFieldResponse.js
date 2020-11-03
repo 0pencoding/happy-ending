@@ -8,15 +8,19 @@ import "../../scss/validate.scss";
 
 function FullTextFieldResponse({ data, styleName }) {
   const { ftf_style, button_style } = styleName;
-  const { to, validate, ftf_data } = data;
+  const { to, prevent_click, validate, ftf_data } = data;
   const v_component = useRef(null);
 
   const onClick = (e) => {
-    if (!validate) {
-      v_component.current.classList.add("validate");
+    if (!prevent_click.current)
       e.preventDefault();
-    } else {
-      v_component.current.classList.remove("validate");
+    else {
+      if (!validate) {
+        v_component.current.classList.add("validate");
+        e.preventDefault();
+      } else {
+        v_component.current.classList.remove("validate");
+      }
     }
   }
 

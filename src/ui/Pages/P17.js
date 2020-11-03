@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import SeparatedTemplate17 from "../Templates/SeparatedTemplate17";
 import F1 from "../../assets/images/17p_images/1F.png";
@@ -20,11 +20,18 @@ import GW5 from "../../assets/images/17p_images/5GW.png";
 import "../../scss/pages.scss";
 
 function P17({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
 
   const data = {
+    prevent_click: click,
     dq_data: {
       h3_data: {
         day: 3,

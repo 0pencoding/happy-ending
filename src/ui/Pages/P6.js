@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import classNames from "classnames";
 import MultipleChoiceTemplate from "../Templates/MultipleChoiceTemplate";
 import P6_Video from "../../assets/videos/6-tell or not.mp4";
@@ -8,18 +8,25 @@ import P6_Video_B from "../../assets/videos/6-tell or not-tran b.mp4";
 import "../../scss/pages.scss";
 
 function P6({ history }) {
+  const click = useRef(false);
+  const [video, setVideo] = useState(P6_Video);
+  
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
 
-  const [video, setVideo] = useState(P6_Video);
-
   const onClickA = () => {
-    setVideo(P6_Video_A);
+    if (click.current)
+      setVideo(P6_Video_A);
   };
 
   const onClickB = () => {
-    setVideo(P6_Video_B);
+    if (click.current)
+      setVideo(P6_Video_B);
   };
 
   const goNext = () => {
@@ -44,6 +51,7 @@ function P6({ history }) {
       },
     },
     sr_data: {
+      prevent_click: click,
       buttons: [
         {
           text: "A. 가족, 친구에게 이 사실을 말한다",

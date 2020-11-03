@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import MultiTextFieldTemplate from "../Templates/MultiTextFieldTemplate";
@@ -6,11 +6,16 @@ import MultiTextFieldTemplate from "../Templates/MultiTextFieldTemplate";
 import "../../scss/pages.scss";
 
 function P8_2_2({ history }) {
+  const click = useRef(false);
   const [inputs, onChange] = useInputs({	
     homeWithWho: localStorage.getItem("homeWithWho") ?? "",	
     homeWithDo: localStorage.getItem("homeWithDo") ?? "",	
     isValidate: localStorage.getItem("homeWithWho")&&localStorage.getItem("homeWithDo")? true : false,
   });
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
   
   const goBack = () => {
     history.goBack();
@@ -27,6 +32,7 @@ function P8_2_2({ history }) {
     },
     mtfr_data: {
       to: "/p9_2",
+      prevent_click: click,
       validate: inputs.isValidate,
       mtfs_data: {
         l_text: "집에서 (",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import FullTextFieldTemplate from "../Templates/FullTextFieldTemplate";
@@ -6,11 +6,16 @@ import FullTextFieldTemplate from "../Templates/FullTextFieldTemplate";
 import "../../scss/pages.scss";
 
 function P12_2({ history }) {
+  const click = useRef(false);
   const [input, onChange] = useInputs({
     homeHappyMoment: localStorage.getItem("homeHappyMoment") ?? "",
     isValidate: localStorage.getItem("homeHappyMoment")? true : false,
   });
   
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
@@ -32,6 +37,7 @@ function P12_2({ history }) {
     },
     ftfr_data: {
       to: "/p13",
+      prevent_click: click,
       validate: input.isValidate,
       ftf_data: {
         tf_data: {

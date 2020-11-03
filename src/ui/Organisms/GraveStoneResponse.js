@@ -8,16 +8,20 @@ import "../../scss/validate.scss";
 import "../../scss/Organisms/GraveStoneResponse.scss";
 
 function GraveStoneResponse({ data, styleName }) {
-  const { validate, gs_data, btn_data } = data;
+  const { prevent_click, validate, gs_data, btn_data } = data;
   const { gs_style, btn_style } = styleName;
   const v_component = useRef(null);
 
   const onClick = (e) => {
-    if (!validate) {
-      v_component.current.classList.add("validate");
+    if (!prevent_click.current)
       e.preventDefault();
-    } else {
-      v_component.current.classList.remove("validate");
+    else {
+      if (!validate) {
+        v_component.current.classList.add("validate");
+        e.preventDefault();
+      } else {
+        v_component.current.classList.remove("validate");
+      }
     }
   }
 

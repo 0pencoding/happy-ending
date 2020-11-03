@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import SingleTextFieldTemplate from "../Templates/SingleTextFieldTemplate";
@@ -8,12 +8,17 @@ import P8_1_1_Video_tran from "../../assets/videos/8-1-1-travel_tran.mp4";
 import "../../scss/pages.scss";
 
 function P8_1_1({ history }) {
+  const click = useRef(false);
   const loopVideo = useRef(null);
   const [video, setVideo] = useState(P8_1_1_Video);
   const [input, onChange] = useInputs({	
     travelToAlone: localStorage.getItem("travelToAlone") ?? "",	
     isValidate: localStorage.getItem("travelToAlone")? true : false,
   });
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
 
   const goBack = () => {
     history.goBack();
@@ -31,7 +36,8 @@ function P8_1_1({ history }) {
   }
 
   const onClick = () => {
-    setVideo(P8_1_1_Video_tran);
+    if (click.current)
+      setVideo(P8_1_1_Video_tran);
   };
   
   const data = {
@@ -46,6 +52,7 @@ function P8_1_1({ history }) {
     stfr_data: {
       to: false,
       setVideo: onClick,
+      prevent_click: click,
       validate: input.isValidate,
       stfs_data: {
         l_text: "3일간의 여행을 혼자 (",

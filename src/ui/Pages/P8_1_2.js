@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import MultiTextFieldTemplate from "../Templates/MultiTextFieldTemplate";
@@ -8,6 +8,7 @@ import P8_1_2_Video_tran from "../../assets/videos/8-1-1-travel_tran.mp4";
 import "../../scss/pages.scss";
 
 function P8_1_2({ history }) {
+  const click = useRef(false);
   const loopVideo = useRef(null);
   const [video, setVideo] = useState(P8_1_2_Video);
   const [inputs, onChange] = useInputs({	
@@ -15,6 +16,10 @@ function P8_1_2({ history }) {
     travelWithTo: localStorage.getItem("travelWithTo") ?? "",	
     isValidate: localStorage.getItem("travelWithWho")&&localStorage.getItem("travelWithTo")? true : false,
   });
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
 
   const goBack = () => {
     history.goBack();
@@ -27,7 +32,8 @@ function P8_1_2({ history }) {
   };
 
   const onClick = () => {
-    setVideo(P8_1_2_Video_tran);
+    if (click.current)
+      setVideo(P8_1_2_Video_tran);
   };
 
   const onEnded = () => {
@@ -47,6 +53,7 @@ function P8_1_2({ history }) {
     mtfr_data: {
       to: false,
       setVideo: onClick,
+      prevent_click: click,
       validate: inputs.isValidate,
       mtfs_data: {
         l_text: "3일간의 여행을 (",

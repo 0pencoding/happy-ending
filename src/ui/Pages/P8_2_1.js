@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import classNames from "classnames";
 import useInputs from "../useInputs";
 import SingleTextFieldTemplate from "../Templates/SingleTextFieldTemplate";
@@ -7,12 +7,17 @@ import P8_2_1_Video from "../../assets/videos/8-2-1-stay home alone.mp4";
 import "../../scss/pages.scss";
 
 function P8_2_1({ history }) {
+  const click = useRef(false);
   const loopVideo = useRef(null);
   const [input, onChange] = useInputs({	
     homeDoAlone: localStorage.getItem("homeDoAlone") ?? "",	
     isValidate: localStorage.getItem("homeDoAlone")? true : false,
   });
   
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
@@ -33,6 +38,7 @@ function P8_2_1({ history }) {
     },
     stfr_data: {
       to: "/p9_2",
+      prevent_click: click,
       validate: input.isValidate,
       stfs_data: {
         l_text: "집에서 (",
@@ -47,6 +53,7 @@ function P8_2_1({ history }) {
     },
   };
   const styleName = {
+    tp_style: ["fade-in-2s"],
     dq_style: {
       h3_style: ["normal", "eclipse"],
       p_style: ["eclipse"],
@@ -62,7 +69,7 @@ function P8_2_1({ history }) {
   };
 
   return (
-    <div className={classNames("Page", "P8-2-1", "bg-video")}>
+    <div className={classNames("Page", "P8-2-1", "bg-video", "fade-in")}>
       <video autoPlay muted onEnded={onEnded} ref={loopVideo}>
         <source src={P8_2_1_Video} type="video/mp4" />
       </video>

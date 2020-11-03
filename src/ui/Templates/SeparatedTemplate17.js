@@ -8,24 +8,27 @@ import P17Video from "../../assets/videos/17_front.mp4";
 import "../../scss/Templates/SeparatedTemplate17.scss";
 
 function SeparatedTemplate17({ data, styleName, history }) {
-  const { dq_data, flowers } = data;
+  const { prevent_click, dq_data, flowers } = data;
   const { tp_style, dq_style } = styleName;
 
+  const [selectable, setSelectable] = useState(true);
   const [constrasts, setConstrasts] = useState(flowers);
 
   const onClick = (e) => {
     e.preventDefault();
 
-    const flowerName = e.target.id;
+    if (prevent_click.current) {
+      const flowerName = e.target.id;
+      setConstrasts(constrasts.map((constrast) => (constrast.alt === flowerName ? { ...constrast, active: true } : constrast)));
+      setSelectable(false);
 
-    setConstrasts(constrasts.map((constrast) => (constrast.alt === flowerName ? { ...constrast, active: !constrast.active } : constrast)));
+      localStorage.setItem("flower", flowerName);
+      console.log(localStorage);
 
-    localStorage.setItem("flower", flowerName);
-    console.log(localStorage);
-
-    setTimeout(() => {
-      history.push("/p18");
-    }, 3000);
+      setTimeout(() => {
+        history.push("/p18");
+      }, 3000);
+    }
   };
 
   return (
@@ -37,7 +40,7 @@ function SeparatedTemplate17({ data, styleName, history }) {
         <div key={idx}>
           <Img styleName={flower.active ? "fade-in-ease-in" : ""} image={flower.active ? flower.glow : flower.shadow} alt={flower.alt}></Img>
           <Img image={flower.image} alt={flower.alt}></Img>
-          <Link to={"/p18"} id={flower.alt} onClick={onClick}></Link>
+          {selectable && <Link to={"/p18"} id={flower.alt} onClick={onClick}></Link>}
         </div>
       ))}
 

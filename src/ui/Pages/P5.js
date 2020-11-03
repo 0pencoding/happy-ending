@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import SeparatedTemplate5 from "../Templates/SeparatedTemplate5";
@@ -17,6 +17,16 @@ function P5({ history }) {
   localStorage.setItem("deathYear", year);
   localStorage.setItem("deathMonth", month);
   localStorage.setItem("deathDay", day);
+
+  const click = useRef(false);
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
 
   const goBack = () => {
     history.goBack();
@@ -58,7 +68,7 @@ function P5({ history }) {
     s3_style: ["noto", "xs", "davy-gray", "light", "fade-in-out-2s"],
   };
   return (
-    <Link to={"/p6"}>
+    <Link to={"/p6"} onClick={onClick}>
       <div className={classNames("Page", "P5", "bg-video", "fade-in")}>
         <video autoPlay muted loop>
           <source src={P5Vedio} type="video/mp4" />

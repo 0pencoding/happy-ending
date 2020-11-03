@@ -9,16 +9,20 @@ import "../../scss/validate.scss";
 import "../../scss/Templates/SeparatedTemplate14.scss";
 
 function SeparatedTemplate14({ data, styleName }) {
-  const { validate, dq_data, ib_data } = data;
+  const { prevent_click, validate, dq_data, ib_data } = data;
   const { tp_style, dq_style, ib_style, button_style } = styleName;
   const v_component = useRef(null);
 
   const onClick = (e) => {
-    if (!validate) {
-      v_component.current.classList.add("validate");
+    if (!prevent_click.current)
       e.preventDefault();
-    } else {
-      v_component.current.classList.remove("validate");
+    else {
+      if (!validate) {
+        v_component.current.classList.add("validate");
+        e.preventDefault();
+      } else {
+        v_component.current.classList.remove("validate");
+      }
     }
   }
 

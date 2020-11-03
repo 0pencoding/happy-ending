@@ -17,7 +17,7 @@ function SeparatedTemplate7({ data, styleName }) {
         <Span styleName={s2_style}>{s2_data.text}</Span>
       </div>
       <Link to={s1_data.to} onClick={s1_data.onClick}></Link>
-      <Link to={s2_data.to}></Link>
+      <Link to={s2_data.to} onClick={s1_data.onClick}></Link>
     </div>
   );
 }

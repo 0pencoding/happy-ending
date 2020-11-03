@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import InsertyPaperTemplate from "../Templates/InsertyPaperTemplate";
@@ -6,6 +6,17 @@ import InsertyPaperTemplate from "../Templates/InsertyPaperTemplate";
 import "../../scss/pages.scss";
 
 function P26() {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
+
   const data = {
     dq_data: {
       h3_data: {
@@ -38,7 +49,7 @@ function P26() {
   };
 
   return (
-    <Link to={"/p27"}>
+    <Link to={"/p27"} onClick={onClick}>
       <div className={classNames("Page", "P26", "fade-in")}>
         <InsertyPaperTemplate data={data} styleName={styleName}></InsertyPaperTemplate>
       </div>

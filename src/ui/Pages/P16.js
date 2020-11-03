@@ -1,16 +1,28 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import SeparatedTemplate16 from "../Templates/SeparatedTemplate16";
 
 import "../../scss/pages.scss";
 
 function P16({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
+
   const goBack = () => {
     history.goBack();
     history.goBack();
   };
 
   const data = {
+    onClick: onClick,
     dq_data: {
       h3_data: {
         day: 3,

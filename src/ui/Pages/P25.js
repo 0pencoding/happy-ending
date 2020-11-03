@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 import SeparatedTemplate25 from "../Templates/SeparatedTemplate25";
@@ -11,6 +11,16 @@ function P25({ history }) {
   const month = localStorage.getItem("deathMonth");
   const day = localStorage.getItem("deathDay");
   const name = localStorage.getItem("name") ?? "홍길동";
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
+  const onClick = (e) => {
+    if (!click.current)
+      e.preventDefault();
+  };
   
   const goBack = () => {
     history.goBack();
@@ -33,7 +43,7 @@ function P25({ history }) {
   };
 
   return (
-    <Link to={"/p26"}>
+    <Link to={"/p26"} onClick={onClick}>
       <div className={classNames("Page", "P25", "bg-video", "fade-in")}>
         <video autoPlay muted>
           <source src={P25_Video} type="video/mp4" />

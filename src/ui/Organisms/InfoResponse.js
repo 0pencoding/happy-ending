@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import "../../scss/validate.scss";
 
 function InfoResponse({data}) {
-  const { validate, info_data } = data;
+  const { validate, prevent_click, info_data } = data;
   const v_component = useRef(null);
 
   const onClick = (e) => {
@@ -24,7 +24,7 @@ function InfoResponse({data}) {
       <div className={classNames("check-validate")} ref={v_component}>
         <Info data={info_data}></Info>
       </div>
-      <Link to={"/p5"}>
+      <Link to={"/p5"} onClick={prevent_click}>
         <Button styleName={["xxs", "white"]} onClick={onClick}>확인</Button>
       </Link>
     </>

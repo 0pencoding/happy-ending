@@ -7,21 +7,25 @@ import MultiTextFieldSentence from "../Molecules/MultiTextFieldSentence";
 import "../../scss/validate.scss";
 
 function MultiTextFieldResponse({ data, styleName }) {
-  const { to, validate, setVideo, mtfs_data } = data;
+  const { to, prevent_click, validate, setVideo, mtfs_data } = data;
   const { mtfs_style, btn_style } = styleName;
   const v_component = useRef(null);
 
   const onClick = (e) => {
-    if (!validate) {
-      v_component.current.classList.add("validate");
+    if (!prevent_click.current)
       e.preventDefault();
-      e.stopPropagation();
-    } else {
-      v_component.current.classList.remove("validate");
-      if (!to) {
+    else {
+      if (!validate) {
+        v_component.current.classList.add("validate");
         e.preventDefault();
         e.stopPropagation();
-        setVideo();
+      } else {
+        v_component.current.classList.remove("validate");
+        if (!to) {
+          e.preventDefault();
+          e.stopPropagation();
+          setVideo();
+        }
       }
     }
   }

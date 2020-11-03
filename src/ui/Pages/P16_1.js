@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import classNames from "classnames";
 import SeparatedTemplate16_1 from "../Templates/SeparatedTemplate16_1";
 
 import "../../scss/pages.scss";
 
 function P16_1({ history }) {
+  const click = useRef(false);
+
+  useEffect(() => {
+    setTimeout(() => click.current = true, 3000);
+  }, []);
+
   const goBack = () => {
     history.goBack();
   };
 
   const data = {
+    prevent_click: click,
     p_data: {
       text: (
         <>

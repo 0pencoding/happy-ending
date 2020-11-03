@@ -10,7 +10,7 @@ import CamIcon from "../../assets/icons/Camera icon.svg";
 import "../../scss/Templates/SeparatedTemplate16_1.scss";
 
 function SeparatedTemplate16_1({ data, styleName }) {
-  const { p_data } = data;
+  const { prevent_click, p_data } = data;
   const { description_p_style, counter_p_style, icon_style, capture_btn_style, retake_btn_style, check_btn_style } = styleName;
 
   const videoConstraints = {
@@ -40,10 +40,12 @@ function SeparatedTemplate16_1({ data, styleName }) {
   }, [webcamRef, setImgSrc]);
 
   const captureAfter3Sec = useCallback(() => {
-    setTaken(true);
-    setCounter(3);
-    setTimeout(capture, 3000);
-  }, [capture]);
+    if (prevent_click.current) {
+      setTaken(true);
+      setCounter(3);
+      setTimeout(capture, 3000);
+    }
+  }, [capture, prevent_click]);
 
   const retake = useCallback(() => {
     setTaken(false);
@@ -61,7 +63,7 @@ function SeparatedTemplate16_1({ data, styleName }) {
     <div className={"SeparatedTemplate16_1"}>
       {!imgSrc && (
         <>
-          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints}></Webcam>
+          <Webcam audio={false} ref={webcamRef} screenshotFormat="image/jpeg" videoConstraints={videoConstraints} mirrored={true}></Webcam>
           {!taken && (
             <>
               <Button className={"capture"} styleName={capture_btn_style} onClick={captureAfter3Sec}>
