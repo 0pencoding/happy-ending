@@ -11,24 +11,10 @@ function P14({ history }) {
     history.goBack();
   };
 
-  const checkValidate = (messages) => {
-    for (let message of messages) {
-      if (!message.to || message.to === "" || message.to.length < 1 ||
-          !message.message || message.message === "" || message.message.length < 1) {
-        return false;
-      }
-    }
-    return true;
-  };
-
   const [ state, onCreate, onChange, onRemove ] = useInputs({
-    messages: JSON.parse(localStorage.getItem("messages"))
-    ? JSON.parse(localStorage.getItem("messages"))
-    : [{ id: 1 }],
-    isValidate: checkValidate(JSON.parse(localStorage.getItem("messages"))),
+    messages: JSON.parse(localStorage.getItem("messages")) ?? [{ id: 1 }],
+    isValidate: JSON.parse(localStorage.getItem("messages")) ? true : false,
   });
-
-  
   
   const data = {
     validate: state.isValidate,
